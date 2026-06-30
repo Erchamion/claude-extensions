@@ -56,7 +56,40 @@ transitions). This skill is single-ticket and read-only.
 
 ## Analysis model
 
-Always lead with the two universal layers, then add the lens for the card type.
+Lead with the **decision box**, then the two universal layers, then the lens for
+the card type.
+
+### Decision box (always first)
+
+The very first thing after the title/ticket line is a scannable "Act on this"
+block — a one-look summary of what the reader must do, so they never have to read
+the whole analysis to find the signal. Render it as a **markdown blockquote**
+(it reflows at any width — do **not** use ASCII-bordered boxes, which misalign):
+
+```
+> ## ⚡ Act on this
+>
+> 🔴 **Top risk** — the single highest-impact risk or hidden scope.
+>
+> ❓ **Decisions needed (N)**
+> 1. The first blocking question…
+> 2. …
+>
+> 📊 **Status** — one-line rollup.
+```
+
+Rules:
+
+- **Summary, not a replacement.** The box surfaces only the *blocking* subset.
+  The full ambiguity list still lives in *What's vague / needs clarification*
+  below — do not duplicate the long content into the box.
+- **Type-aware fill** (mirror the lens below): Epic/Feature → scope or
+  hidden-scope risk + child-status rollup; Story → MVP scope-creep risk + the
+  sharpest INVEST red flag; Bug → repro/root-cause blocker + severity.
+- **Caps, to stay scannable:** top risk ≤ ~2 lines, decisions ≤ 4 items, status
+  one line.
+- **Omit, don't pad.** No notable risk, or nothing genuinely blocking? Drop that
+  line rather than inventing one.
 
 ### Universal (every card type)
 
@@ -81,10 +114,18 @@ sub-points that the card actually warrants, skip ones that don't apply.
 
 ## Output shape
 
-Present in chat as markdown: a short summary paragraph, then headed sections for
-the universal layers and the type lens. Keep clarifying questions as a numbered
-list the user can act on. Link the ticket key to its URL (the script provides
-it).
+Present in chat as markdown, in this fixed order so the reader always knows where
+to look:
+
+1. **Title + ticket line** — `# KEY — Summary (Type) — Analysis`, then a compact
+   meta line (type, status, parent, assignee/estimate). Link the ticket key to
+   its URL (the script provides it).
+2. **Decision box** — the `> ## ⚡ Act on this` blockquote (see *Analysis model*).
+3. **High-level summary**, then the remaining headed sections for the universal
+   layers and the type lens.
+
+Keep the full clarifying questions as a numbered list under *What's vague /
+needs clarification*; the decision box references only the blocking subset.
 
 ## Common mistakes
 
@@ -96,3 +137,7 @@ it).
   live in the comment thread — fold them into the analysis.
 - **Treating Feature like a Story.** Where a Jira uses Feature/Initiative as
   parent-level types, use the child-issue rollup, not the Story lens.
+- **Padding the decision box.** It earns its place by being short and true. Don't
+  promote a minor nitpick to "Top risk," and don't list non-blocking questions as
+  "Decisions needed" — omit a line before you weaken it. A box that cries wolf
+  stops getting the first look, which defeats its whole purpose.
