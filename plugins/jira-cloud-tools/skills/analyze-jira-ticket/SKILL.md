@@ -127,6 +127,31 @@ to look:
 Keep the full clarifying questions as a numbered list under *What's vague /
 needs clarification*; the decision box references only the blocking subset.
 
+### Section headings (fixed emoji legend)
+
+Give every section heading a leading emoji from this legend, so the same glyph
+always marks the same kind of content and the reader can find a section by its
+icon. Keep bold **sub-labels** inside sections (e.g. **Top risk**, **Gaps**) —
+the emoji are for headings only, not inline labels.
+
+| Section | Heading |
+|---|---|
+| Decision box | `## ⚡ Act on this` |
+| High-level summary | `## 📝 High-level summary` |
+| Scope & child rollup (Epic/Feature) | `## 🗂️ Scope & child rollup` |
+| What's vague / clarification | `## ❓ What's vague / needs clarification` |
+| Functional requirements | `## 📋 Functional requirements` |
+| *Story* — acceptance criteria | `## ✅ Acceptance criteria` |
+| *Story* — INVEST read | `## 💎 INVEST read` |
+| *Bug* — reproduction | `## 🔁 Reproduction` |
+| *Bug* — root cause | `## 🔍 Root cause` |
+| *Bug* — severity / impact | `## 🚦 Severity & impact` |
+
+The `❓` on the clarification section deliberately matches the `❓ Decisions
+needed` label in the decision box, so the box's blocking subset and the full list
+read as one family. For a section not in this legend, pick a glyph in the same
+spirit — one icon, semantically apt, never decorative.
+
 ## Common mistakes
 
 - **Restating the description as the "summary."** The summary must add
