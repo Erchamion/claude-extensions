@@ -56,10 +56,32 @@ transitions). This skill is single-ticket and read-only.
 
 ## Analysis model
 
-Lead with the **decision box**, then the two universal layers, then the lens for
-the card type.
+Lead with the **readiness verdict**, then the **decision box**, then the two
+universal layers, then the lens for the card type.
 
-### Decision box (always first)
+### Readiness verdict (first line)
+
+The very first line, directly under the title/ticket line and above the decision
+box, is a one-line readiness call — the "is it safe to proceed?" signal:
+
+```
+**Readiness: 🟢 PASS** — <why, + what this unlocks>
+**Readiness: 🔴 BLOCKED** — <N open decisions, M unresolved risks; what to do>
+```
+
+It is **mechanical, not a judgment call**: the verdict is `PASS` if and only if
+the decision box is clear — no open blocking decisions and no unresolved top
+risk. Otherwise `BLOCKED`, and the message counts what's open and points at the
+⚡ box. The loop is: read the verdict → resolve the ⚡ items in Jira → re-run →
+the verdict flips once the box empties.
+
+What "clear" requires is **type-aware** (see *Readiness criteria* below) — e.g. a
+Story isn't clear until it has testable AC, so missing AC surfaces as a blocking
+item in the box and holds the verdict at BLOCKED. The PASS message names what the
+pass unlocks for that type (Epic → decompose into features; Story → implement;
+Bug → fix).
+
+### Decision box (below the verdict)
 
 The very first thing after the title/ticket line is a scannable "Act on this"
 block — a one-look summary of what the reader must do, so they never have to read
@@ -112,6 +134,23 @@ sub-points that the card actually warrants, skip ones that don't apply.
 | **Bug** | Repro clarity (are steps sufficient?), expected-vs-actual, impact/severity, and what's **missing** to reproduce or to verify the fix. When the code is available, trace the **root cause** in the implementation and distinguish a proper code fix from a workaround. |
 | **Other / unknown** | Universal layers only, plus whatever naturally fits. |
 
+### Readiness criteria (per type)
+
+What must be resolved for the decision box to count as **clear** — i.e. for the
+verdict to read PASS. When one of these is unmet, it *is* a blocking item: put it
+in the box and the verdict stays BLOCKED.
+
+| Type | Clear when… | PASS unlocks |
+|------|-------------|--------------|
+| **Epic / Feature / Initiative** | No open high-level decisions; no unresolved hidden-scope risk; children identified; scope (incl. any stated MVP) coherent. | Decompose into / refine the child features. |
+| **Story** | All of the above **plus testable, in-scope acceptance criteria present**. Missing, vague, or out-of-scope AC is itself a blocking item. | Start implementation. |
+| **Bug** | Clear repro (expected-vs-actual + sufficient steps) and known impact/severity. No reliable repro is a blocking item. | Start the fix. |
+| **Other / unknown** | No open blocking decisions or unresolved risks surfaced. | Proceed per context. |
+
+This is the *implementation-safety ladder*: "clear" is necessary at every level,
+but you implement **stories**, so the green light to write code is a **Story**
+verdict reading PASS. An Epic PASS only green-lights decomposition — never coding.
+
 ## Output shape
 
 Present in chat as markdown, in this fixed order so the reader always knows where
@@ -120,8 +159,10 @@ to look:
 1. **Title + ticket line** — `# KEY — Summary (Type) — Analysis`, then a compact
    meta line (type, status, parent, assignee/estimate). Link the ticket key to
    its URL (the script provides it).
-2. **Decision box** — the `> ## ⚡ Act on this` blockquote (see *Analysis model*).
-3. **High-level summary**, then the remaining headed sections for the universal
+2. **Readiness verdict** — the one-line `**Readiness: …**` call (see *Analysis
+   model*), directly under the title and above the box.
+3. **Decision box** — the `> ## ⚡ Act on this` blockquote (see *Analysis model*).
+4. **High-level summary**, then the remaining headed sections for the universal
    layers and the type lens.
 
 Keep the full clarifying questions as a numbered list under *What's vague /
@@ -166,3 +207,6 @@ spirit — one icon, semantically apt, never decorative.
   promote a minor nitpick to "Top risk," and don't list non-blocking questions as
   "Decisions needed" — omit a line before you weaken it. A box that cries wolf
   stops getting the first look, which defeats its whole purpose.
+- **Faking the verdict.** Readiness is mechanical: PASS only when the box is
+  genuinely clear. Don't soften a BLOCKED to PASS to seem helpful, and never pass
+  a Story that lacks testable AC. A wrong PASS green-lights unsafe work.
