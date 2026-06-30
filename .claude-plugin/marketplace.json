@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "staten-extensions",
+  "description": "Jon Staten's personal Claude Code extensions: skills, agents, commands, and hooks grouped into plugins by domain.",
+  "owner": {
+    "name": "Jon Staten",
+    "email": "jon.staten@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "jira-cloud-tools",
+      "source": "./plugins/jira-cloud-tools",
+      "description": "Tools for working with Jira Cloud (REST API v3 / ADF). Includes analyze-jira-ticket: fetch a single ticket and produce a type-aware analysis."
+    }
+  ]
+}
