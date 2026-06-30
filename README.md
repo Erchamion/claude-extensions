@@ -38,6 +38,10 @@ Tools for **Jira Cloud** (REST API v3 / ADF — not on-prem Data Center/Server).
 - **analyze-jira-ticket** — fetch a single ticket plus its context and produce a
   type-aware analysis (Epic/Feature, Story, Bug). Read-only.
 
+**Requires Python 3** on PATH (the fetch script is stdlib-only and runs on
+Windows/macOS/Linux). On Windows, invoke with `python` or `py -3` if `python3`
+isn't available.
+
 **Configuration** is never stored in this repo — no site URL, email, or token.
 The fetch script reads `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN` in order
 from: env vars, then `~/.config/jira/.env`, then a walked-up `.env`. All three

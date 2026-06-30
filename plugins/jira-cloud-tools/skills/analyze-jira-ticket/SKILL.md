@@ -32,6 +32,9 @@ transitions). This skill is single-ticket and read-only.
    python3 <this-skill-dir>/scripts/fetch_ticket.py PROJ-1234
    ```
 
+   Requires Python 3. If `python3` isn't found (common on Windows), use `python`
+   (or `py -3`) instead — the script itself is cross-platform.
+
    It prints structured markdown: fields, description, **attachment list**,
    subtasks, linked issues, comments, and — for parent-level cards
    (Epic/Feature/Initiative) — a rollup of child issues. Credentials are read
