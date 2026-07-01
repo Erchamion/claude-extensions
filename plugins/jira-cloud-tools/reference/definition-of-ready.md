@@ -45,6 +45,17 @@ real but resolvable during the *next* level's work is a **downstream note**.
 call:** state, for each remaining risk, why it is downstream and not
 premise-threatening. Never pass silently over an open risk.
 
+**Unverified premises → investigate, don't guess.** Some premises rest on an
+unvalidated technical assumption — most commonly "build B by cloning / reusing /
+paralleling existing A." When that assumption is **unverified** (nothing in the
+ticket or code shows it actually holds), the assumption *itself* is the finding:
+surface **investigative work to scope it** — e.g. "investigate whether this is
+really a clone of A or its own service," "investigate seam X for a hidden
+refactor" — instead of guessing risk-vs-blocker. Name what to investigate; treat
+it as premise-threatening when the epic's whole scope hinges on the assumption. Do
+**not** fire this when reuse is already evidenced as decoupled — only when it is
+unverified.
+
 **What counts as a dependency being "confirmed or tracked"** (for the Epic gate's
 external-dependency item): a **parent, ancestor, or sibling** ticket does **not**
 by itself satisfy it. The dependency is *tracked* only via an explicit dependency
@@ -52,6 +63,12 @@ link (e.g. "depends on" / "is blocked by") to the specific issue that delivers i
 or an in-ticket statement that the system/data already exists. An inferred or
 hierarchical relationship — "it's under the Service Domain epic, so it must be
 covered" — is **not** evidence of delivery, and leaning on one is a false PASS.
+
+And a dependency counts as **existing** only if it is **operative** — usable data
+plus working logic. A bare schema, seed data, naming convention, or empty model
+with no behavior is not "partial" — it is **not found**, *unless* its delivery is
+tracked as an explicit linked dependency (then it is a tracked, downstream item,
+not a blocker).
 
 ## Blocking decision vs. tuning note
 
