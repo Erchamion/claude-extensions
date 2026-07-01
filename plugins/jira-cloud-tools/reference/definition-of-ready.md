@@ -23,6 +23,27 @@ A ticket is **clear** when its decision box is empty:
 `clear` is necessary at every level. It is not, by itself, sufficient to start
 **coding** — see the ladder below.
 
+## Blocking decision vs. tuning note
+
+Not every open question is a blocker. Test each one before it goes in the box:
+
+- A **blocking decision** changes the *shape* of the work — you cannot decompose
+  or implement coherently until it's answered.
+- A **tuning note** is a value or parameter that can be set (or changed) later
+  without reshaping the work. In particular: **a parameter the ticket already
+  requires to be _configurable_ is a tuning note, not a blocker.** The story only
+  needs to *make it configurable* — which the requirement already mandates — not
+  to fix the final value now. The blocker, if any, is *failing to make it
+  configurable*, never the pending value.
+
+  *Example:* "Prepaid/Proactive window: 7 or 14 days?" is a tuning note when a
+  requirement mandates configurable ranking — decomposition and implementation
+  proceed with the window as a config value; the number can land post-MVP.
+
+When you genuinely can't tell which side a question falls on, **do not silently
+decide** — surface it as a question for a human (the `review-jira-readiness`
+critic does this explicitly).
+
 ## Level / type criteria
 
 Each row lists what must additionally be true for that type to count as clear,

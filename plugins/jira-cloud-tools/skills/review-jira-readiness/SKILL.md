@@ -62,9 +62,19 @@ reports, or writing back to Jira.
    - **🚦 Verdict challenge** — your independent verdict vs. the analysis's. If
      the analysis said PASS but you found a blocker, call out the **false PASS**
      explicitly.
+   - **❓ Judgment calls** — anything you are *genuinely unsure* is a blocker.
+     Do **not** silently decide a borderline case; phrase it as a question for a
+     human, state how you'd lean and why, and let them settle it. Use the DoR's
+     *blocking decision vs. tuning note* test first — surface only what survives
+     it as still-ambiguous.
+   - **🔧 Rubric feedback** — where the Definition of Ready was ambiguous, silent,
+     or would have made a call obvious if sharpened, propose a **specific**
+     refinement (the wording you'd add). Advisory only — never edit the DoR
+     yourself; the human decides whether to adopt it.
 
-   If no analysis was provided, skip the diff and just return your independent
-   readiness assessment.
+   If no analysis was provided, skip the diff and return your independent
+   readiness assessment plus any Judgment calls and Rubric feedback (see
+   *Independent mode* below).
 
 ## Output shape
 
@@ -83,10 +93,52 @@ format so the two read as a family:
 
 ## 🚦 Verdict challenge
 - …
+
+## ❓ Judgment calls
+- <borderline question> — I'd lean <blocker/note> because <why>. Confirm?
+
+## 🔧 Rubric feedback
+- The DoR is silent on <X>. Suggest adding: "<exact wording>".
 ```
 
-If your verdict agrees with the analysis and you found nothing missed, say so
-plainly and briefly — a clean confirmation is a valid result.
+Omit `❓ Judgment calls` or `🔧 Rubric feedback` when you have none — don't
+manufacture them. If your verdict agrees with the analysis and you found nothing
+missed, say so plainly and briefly — a clean confirmation is a valid result.
+
+## Independent mode (preferred — true blindness)
+
+The strongest way to run this critic is **without ever showing it the analysis**,
+so it *cannot* anchor. In this mode you produce only your own assessment; a
+separate diff step (run by the dispatcher, not you) compares it to the analysis
+afterward. Emit a **structured** result so that diff can be mechanical:
+
+```
+verdict: BLOCKED | PASS
+type: Epic | Feature | Story | Bug | Other
+blockers:
+  - id: <short-slug>        # e.g. service-data-source
+    kind: decision | risk | ac-gap | mvp-misalignment
+    summary: <one line>
+risks:
+  - id: <slug>
+    summary: <one line>
+ac_status: present-testable | present-weak | absent | n/a
+judgment_calls:
+  - question: <…>
+    lean: blocker | note
+    why: <…>
+rubric_feedback:
+  - gap: <…>
+    suggested_wording: <…>
+```
+
+The dispatcher then diffs by `id`/topic: blockers in your list but absent from the
+analysis → **Missed**; a verdict mismatch → **Verdict challenge**; items the
+analysis has but you don't → it over-flagged (worth a second look). Because you
+never saw the analysis, every match or gap is real signal, not an echo.
+
+Use **diff mode** (analysis provided in-prompt, blind pass first) only for a quick
+one-shot check where spinning up the separate diff step isn't worth it.
 
 ## Common mistakes
 
@@ -98,13 +150,18 @@ plainly and briefly — a clean confirmation is a valid result.
   or wrong, not a re-summary of what's already there.
 - **Passing a Story without testable AC.** Per the Definition of Ready, that's an
   automatic blocker — never wave it through.
+- **Silently settling a coin-flip.** If you can't confidently call something a
+  blocker, it goes in *❓ Judgment calls* as a question — not quietly into (or out
+  of) the box. Making the 50/50 gate call yourself is the failure mode.
 
 ## Open items (v2 — refine as we go)
 
-- **True blindness.** When dispatched as a subagent with the analysis in the
-  prompt, the "blind pass" is enforced by instruction ordering, not isolation. A
-  stronger design dispatches the critic *without* the analysis, then diffs
-  programmatically. Revisit once the basic flow works.
+- **True blindness — designed, not yet wired.** *Independent mode* above removes
+  the anchoring problem: dispatch the critic with **no analysis in its context**,
+  get the structured assessment, diff separately. What's left is the **runner**
+  that orchestrates it — analyze (or load the analysis) → dispatch critic blind →
+  run the diff → present Missed/Disputed/Verdict. That runner (a command or the
+  v3 orchestration) is the next build.
 - **Shared fetch script.** `fetch_ticket.py` currently lives inside
   `analyze-jira-ticket`. If both skills keep sharing it, consider relocating it to
   a plugin-level `scripts/` dir so neither skill reaches into the other.
