@@ -45,6 +45,14 @@ real but resolvable during the *next* level's work is a **downstream note**.
 call:** state, for each remaining risk, why it is downstream and not
 premise-threatening. Never pass silently over an open risk.
 
+**What counts as a dependency being "confirmed or tracked"** (for the Epic gate's
+external-dependency item): a **parent, ancestor, or sibling** ticket does **not**
+by itself satisfy it. The dependency is *tracked* only via an explicit dependency
+link (e.g. "depends on" / "is blocked by") to the specific issue that delivers it,
+or an in-ticket statement that the system/data already exists. An inferred or
+hierarchical relationship — "it's under the Service Domain epic, so it must be
+covered" — is **not** evidence of delivery, and leaning on one is a false PASS.
+
 ## Blocking decision vs. tuning note
 
 Not every open question is a blocker. Test each one before it goes in the box:
