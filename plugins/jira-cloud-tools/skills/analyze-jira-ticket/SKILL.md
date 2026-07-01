@@ -75,7 +75,8 @@ risk. Otherwise `BLOCKED`, and the message counts what's open and points at the
 ⚡ box. The loop is: read the verdict → resolve the ⚡ items in Jira → re-run →
 the verdict flips once the box empties.
 
-What "clear" requires is **type-aware** (see *Readiness criteria* below) — e.g. a
+What "clear" requires is **type-aware** — see the shared **Definition of Ready**
+(`../../reference/definition-of-ready.md`), the canonical criteria — e.g. a
 Story isn't clear until it has testable AC, so missing AC surfaces as a blocking
 item in the box and holds the verdict at BLOCKED. The PASS message names what the
 pass unlocks for that type (Epic → decompose into features; Story → implement;
@@ -136,20 +137,16 @@ sub-points that the card actually warrants, skip ones that don't apply.
 
 ### Readiness criteria (per type)
 
-What must be resolved for the decision box to count as **clear** — i.e. for the
-verdict to read PASS. When one of these is unmet, it *is* a blocking item: put it
-in the box and the verdict stays BLOCKED.
+The criteria that decide whether the decision box counts as **clear** — and thus
+whether the verdict reads PASS — are defined **once**, in the shared
+[Definition of Ready](../../reference/definition-of-ready.md). Read it and apply
+it; do not restate a private copy here (the `review-jira-readiness` skill judges
+by the same file, so they must not drift).
 
-| Type | Clear when… | PASS unlocks |
-|------|-------------|--------------|
-| **Epic / Feature / Initiative** | No open high-level decisions; no unresolved hidden-scope risk; children identified; scope (incl. any stated MVP) coherent. | Decompose into / refine the child features. |
-| **Story** | All of the above **plus testable, in-scope acceptance criteria present**. Missing, vague, or out-of-scope AC is itself a blocking item. | Start implementation. |
-| **Bug** | Clear repro (expected-vs-actual + sufficient steps) and known impact/severity. No reliable repro is a blocking item. | Start the fix. |
-| **Other / unknown** | No open blocking decisions or unresolved risks surfaced. | Proceed per context. |
-
-This is the *implementation-safety ladder*: "clear" is necessary at every level,
-but you implement **stories**, so the green light to write code is a **Story**
-verdict reading PASS. An Epic PASS only green-lights decomposition — never coding.
+In short: any unmet criterion *is* a blocking item — put it in the box and the
+verdict stays BLOCKED. And per the file's **implementation-safety ladder**, an
+Epic PASS only green-lights decomposition; the green light to write code is a
+**Story** verdict reading PASS (clear **and** testable AC present).
 
 ## Output shape
 
