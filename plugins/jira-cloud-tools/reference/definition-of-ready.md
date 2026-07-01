@@ -79,7 +79,7 @@ and what a PASS unlocks.
 
 | Type | Clear when… | PASS unlocks |
 |------|-------------|--------------|
-| **Epic / Feature / Initiative** | Universal gate + children identified (present as linked issues; their *granularity* is judged during decomposition, not at this gate — a single coarse child doesn't block but is surfaced as a decomposition-risk note) + scope (incl. any stated MVP) coherent. | Decompose into / refine the child features. |
+| **Epic / Feature / Initiative** | Universal gate + children identified (present as linked issues; their *granularity* is judged during decomposition, not at this gate — a single coarse child doesn't block but is surfaced as a decomposition-risk note) + scope (incl. any stated MVP) coherent + **any external system/data the MVP premise depends on is confirmed to exist or tracked as an explicit linked dependency** (an unverified dependency the premise rests on is a premise-threatening blocker). | Decompose into / refine the child features. |
 | **Story** | Universal gate + **testable, in-scope acceptance criteria present** (see below). Missing, vague, or out-of-scope AC is itself a blocking item. | Start implementation. |
 | **Bug** | Universal gate + reliable repro (expected-vs-actual + sufficient steps) + known impact/severity. No reliable repro is a blocking item. | Start the fix. |
 | **Other / unknown** | Universal gate only. | Proceed per context. |
