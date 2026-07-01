@@ -1,5 +1,5 @@
 ---
-name: analyze-jira-ticket
+name: analyze-ticket
 description: Use when asked to analyze, review, summarize, or understand a Jira ticket or issue, or when given a bare Jira issue key (e.g. PROJ-1234, ABC-987) to look into. Works from any repo or session — fetches the ticket from Jira read-only and produces a type-aware analysis.
 ---
 
@@ -140,7 +140,7 @@ sub-points that the card actually warrants, skip ones that don't apply.
 The criteria that decide whether the decision box counts as **clear** — and thus
 whether the verdict reads PASS — are defined **once**, in the shared
 [Definition of Ready](../../reference/definition-of-ready.md). Read it and apply
-it; do not restate a private copy here (the `review-jira-readiness` skill judges
+it; do not restate a private copy here (the `challenge-readiness` skill judges
 by the same file, so they must not drift).
 
 In short: any unmet criterion *is* a blocking item — put it in the box and the

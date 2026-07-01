@@ -9,15 +9,22 @@ Tools for working with **Jira Cloud** (REST API v3 / ADF). Part of the
 
 ## Skills
 
-- **analyze-jira-ticket** — fetch a single ticket plus its context (linked
+- **analyze-ticket** — fetch a single ticket plus its context (linked
   issues, subtasks, comments, attachment list, and a child-issue rollup for
   Epic/Feature/Initiative cards) and produce a type-aware analysis:
   - **Epic/Feature/Initiative** → initiative summary + child rollup, scope.
   - **Story** → MVP-alignment / scope-creep check, proposed Gherkin AC, INVEST.
   - **Bug** → repro clarity, expected-vs-actual, impact, root-cause when the
     code is available.
+- **ready-check-ticket** — the gated readiness runner: runs `analyze-ticket`,
+  then an independent blind critic, and reconciles them into one PASS/BLOCKED
+  **readiness verdict** for a single ticket. Use to decide whether a ticket is
+  safe to proceed / implement.
 
-  Read-only — it never writes to Jira.
+Both are read-only. An internal `challenge-readiness` skill (the blind critic)
+backs the runner and is hidden from the slash menu (`user-invocable: false`); the
+shared `reference/definition-of-ready.md` is the single source of truth for what
+"Ready" means.
 
 ## Install
 
@@ -27,7 +34,8 @@ Tools for working with **Jira Cloud** (REST API v3 / ADF). Part of the
 ```
 
 Then in a session: "analyze PROJ-1234", "what's ABC-987 about?", or drop a bare
-issue key.
+issue key. For the gated readiness verdict, run
+`/jira-cloud-tools:ready-check-ticket PROJ-1234` or ask "is PROJ-1234 ready?".
 
 ## Prerequisites
 
@@ -62,7 +70,7 @@ chmod 600 ~/.config/jira/.env
 
 Generate a token at
 <https://id.atlassian.com/manage-profile/security/api-tokens>. Full details:
-[`skills/analyze-jira-ticket/reference/credentials-setup.md`](skills/analyze-jira-ticket/reference/credentials-setup.md).
+[`skills/analyze-ticket/reference/credentials-setup.md`](skills/analyze-ticket/reference/credentials-setup.md).
 
 ## License
 

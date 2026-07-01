@@ -1,9 +1,9 @@
 ---
-name: gated-ticket-review
-description: Use when asked whether a Jira ticket is Ready or safe to proceed/implement, to "gate" a ticket, or for an independent second opinion on a ticket's readiness. Runs the FULL gated review of ONE ticket — a type-aware analysis plus a blind independent critic — and reconciles them into a single PASS/BLOCKED verdict. Read-only. NOT for a plain single-ticket summary (use analyze-jira-ticket), and NOT for walking an epic's child issues (that is a separate feature). Triggers on readiness/gate intent, never on a bare "analyze".
+name: ready-check-ticket
+description: Use when asked whether a Jira ticket is Ready or safe to proceed/implement, to "gate" a ticket, or for an independent second opinion on a ticket's readiness. Runs the FULL gated review of ONE ticket — a type-aware analysis plus a blind independent critic — and reconciles them into a single PASS/BLOCKED verdict. Read-only. NOT for a plain single-ticket summary (use analyze-ticket), and NOT for walking an epic's child issues (that is a separate feature). Triggers on readiness/gate intent, never on a bare "analyze".
 ---
 
-# Gated Ticket Review
+# Ready-Check Ticket
 
 ## Overview
 
@@ -19,20 +19,20 @@ keep it single-ticket and side-effect-free.
 - "Is MOD-1234 ready?" / "gate MOD-1234" / "safe to implement MOD-1234?"
 - "Give me a second opinion on this ticket's readiness."
 
-Not for: a plain analysis (use `analyze-jira-ticket`); walking an epic's children
+Not for: a plain analysis (use `analyze-ticket`); walking an epic's children
 (the walk feature); writing back to Jira.
 
 ## Procedure
 
 1. **Analyze.** Produce the ticket analysis by following the
-   `analyze-jira-ticket` skill end to end (fetch → type-aware analysis → decision
+   `analyze-ticket` skill end to end (fetch → type-aware analysis → decision
    box → readiness verdict). Hold onto the analysis text and its verdict.
 
-2. **Critique — blind & independent.** Dispatch `review-jira-readiness` in
+2. **Critique — blind & independent.** Dispatch `challenge-readiness` in
    **Independent mode** as a **subagent**, and **do NOT pass it your analysis** —
    true independence is the whole point. Give the subagent only:
    - the ticket key,
-   - the paths to `skills/review-jira-readiness/SKILL.md` and
+   - the paths to `skills/challenge-readiness/SKILL.md` and
      `reference/definition-of-ready.md` (to read and follow),
    - the fetch-script path.
 
@@ -49,7 +49,7 @@ Not for: a plain analysis (use `analyze-jira-ticket`); walking an epic's childre
 
 4. **Present — reconciled readout.** Lead with the **reconciled verdict** block,
    then a short "second opinion" delta (missed / disputed / verdict-diff), then
-   the full analysis below. Reuse `analyze-jira-ticket`'s decision-box and section
+   the full analysis below. Reuse `analyze-ticket`'s decision-box and section
    emoji conventions so it all reads as one family.
 
 ## Reconciled verdict rules
@@ -71,7 +71,7 @@ Not for: a plain analysis (use `analyze-jira-ticket`); walking an epic's childre
 🕳️ Missed: …   ⚖️ Disputed: …   ❓ Judgment calls: …   🔧 Rubric feedback: …
 
 ---
-<the full analyze-jira-ticket output>
+<the full analyze-ticket output>
 ```
 
 ## Common mistakes

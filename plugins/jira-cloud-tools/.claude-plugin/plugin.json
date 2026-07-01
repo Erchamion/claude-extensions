@@ -1,7 +1,7 @@
 {
   "name": "jira-cloud-tools",
-  "description": "Tools for working with Jira Cloud (REST API v3 / ADF). Includes analyze-jira-ticket: fetch a single ticket plus its context and produce a type-aware analysis.",
-  "version": "0.5.0",
+  "description": "Tools for working with Jira Cloud (REST API v3 / ADF). Includes analyze-ticket (type-aware single-ticket analysis) and ready-check-ticket (gated PASS/BLOCKED readiness verdict).",
+  "version": "0.6.0",
   "license": "MIT",
   "author": {
     "name": "Jon Staten",

@@ -1,13 +1,14 @@
 ---
-name: review-jira-readiness
-description: Use when you need an independent, skeptical second opinion on whether a Jira ticket is truly Ready — pressure-tests a prior analysis (or a raw ticket) against the shared Definition of Ready, hunting for missed risks, disputed claims, and false PASS verdicts. Read-only. Best run as a subagent so its judgment is independent of the analysis it reviews.
+name: challenge-readiness
+description: Use when you need an independent, skeptical second opinion on whether a Jira ticket is truly Ready — pressure-tests a prior analysis (or a raw ticket) against the shared Definition of Ready, hunting for missed risks, disputed claims, and false PASS verdicts. Read-only. Best run as a subagent so its judgment is independent of the analysis it reviews. Internal building block for ready-check-ticket; hidden from the slash menu.
+user-invocable: false
 ---
 
-# Review Jira Readiness
+# Challenge Readiness
 
 ## Overview
 
-A **critic**, not an analyst. Where `analyze-jira-ticket` produces the analysis,
+A **critic**, not an analyst. Where `analyze-ticket` produces the analysis,
 this skill independently challenges it: is the ticket genuinely Ready, or did the
 analysis miss a risk, wave through weak acceptance criteria, or hand out a PASS it
 didn't earn? Read-only — never writes to Jira.
@@ -32,7 +33,7 @@ Adopt this stance for the whole review:
   green-lights unsafe work — the highest-value catch).
 - Any time you want an independent readiness check on a single ticket.
 
-Not for: producing the primary analysis (use `analyze-jira-ticket`), batch
+Not for: producing the primary analysis (use `analyze-ticket`), batch
 reports, or writing back to Jira.
 
 ## Procedure
@@ -40,10 +41,10 @@ reports, or writing back to Jira.
 1. **Fetch the ticket** from the same source the analyzer uses:
 
    ```bash
-   python3 ../analyze-jira-ticket/scripts/fetch_ticket.py PROJ-1234
+   python3 ../analyze-ticket/scripts/fetch_ticket.py PROJ-1234
    ```
 
-   Credentials and exit codes work exactly as in `analyze-jira-ticket` (see its
+   Credentials and exit codes work exactly as in `analyze-ticket` (see its
    `reference/credentials-setup.md`).
 
 2. **Blind pass — form your own view first.** Before reading any analysis you
@@ -167,5 +168,5 @@ one-shot check where spinning up the separate diff step isn't worth it.
   run the diff → present Missed/Disputed/Verdict. That runner (a command or the
   v3 orchestration) is the next build.
 - **Shared fetch script.** `fetch_ticket.py` currently lives inside
-  `analyze-jira-ticket`. If both skills keep sharing it, consider relocating it to
+  `analyze-ticket`. If both skills keep sharing it, consider relocating it to
   a plugin-level `scripts/` dir so neither skill reaches into the other.

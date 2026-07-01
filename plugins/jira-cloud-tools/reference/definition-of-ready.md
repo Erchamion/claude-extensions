@@ -3,9 +3,9 @@
 Single source of truth for what "Ready" means across the `jira-cloud-tools`
 plugin. **Both** skills reference this file so the criteria never drift:
 
-- `analyze-jira-ticket` — *surfaces* unmet criteria as blocking items in the
+- `analyze-ticket` — *surfaces* unmet criteria as blocking items in the
   decision box, and computes the PASS/BLOCKED readiness verdict from them.
-- `review-jira-readiness` — *independently challenges* a ticket against these
+- `challenge-readiness` — *independently challenges* a ticket against these
   same criteria, hunting for anything the analysis missed.
 
 Same destination (is it Ready?), reached two different ways. Edit the criteria
@@ -77,7 +77,7 @@ Not every open question is a blocker. Test each one before it goes in the box:
   blocking decision.
 
 When you genuinely can't tell which side a question falls on, **do not silently
-decide** — surface it as a question for a human (the `review-jira-readiness`
+decide** — surface it as a question for a human (the `challenge-readiness`
 critic does this explicitly).
 
 ## Level / type criteria

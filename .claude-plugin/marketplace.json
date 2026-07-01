@@ -10,7 +10,7 @@
     {
       "name": "jira-cloud-tools",
       "source": "./plugins/jira-cloud-tools",
-      "description": "Tools for working with Jira Cloud (REST API v3 / ADF). Includes analyze-jira-ticket: fetch a single ticket and produce a type-aware analysis."
+      "description": "Tools for working with Jira Cloud (REST API v3 / ADF). Includes analyze-ticket (type-aware analysis) and ready-check-ticket (gated readiness verdict)."
     }
   ]
 }

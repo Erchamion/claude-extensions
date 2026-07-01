@@ -10,7 +10,10 @@ plugin marketplace so they install on any machine.
 plugins/
   jira-cloud-tools/                 # a plugin (has its own README)
     .claude-plugin/plugin.json
-    skills/analyze-jira-ticket/     # SKILL.md + scripts/ + reference/
+    reference/                      # shared, e.g. definition-of-ready.md
+    skills/analyze-ticket/          # SKILL.md + scripts/ + reference/
+    skills/ready-check-ticket/      # gated readiness runner
+    skills/challenge-readiness/     # internal critic (hidden)
 ```
 
 One repo = one marketplace = many plugins. Each plugin can bundle skills,
