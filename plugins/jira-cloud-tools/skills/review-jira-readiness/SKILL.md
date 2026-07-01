@@ -153,6 +153,10 @@ one-shot check where spinning up the separate diff step isn't worth it.
 - **Silently settling a coin-flip.** If you can't confidently call something a
   blocker, it goes in *❓ Judgment calls* as a question — not quietly into (or out
   of) the box. Making the 50/50 gate call yourself is the failure mode.
+- **Passing over an open risk without a word.** If you return PASS while your
+  `risks` list is non-empty, you MUST justify — in *❓ Judgment calls* — why each
+  remaining risk is **downstream**, not **premise-threatening** (per the DoR). A
+  silent PASS over an open risk is the exact failure this critic exists to catch.
 
 ## Open items (v2 — refine as we go)
 

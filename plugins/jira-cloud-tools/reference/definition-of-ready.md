@@ -17,11 +17,33 @@ A ticket is **clear** when its decision box is empty:
 
 - **No open blocking decisions** — every question whose answer changes the work
   is resolved (in the ticket: comments, fields, updated AC).
-- **No unresolved top risk** — no known hidden scope or unmitigated risk that
-  would derail the work.
+- **No unresolved premise-threatening risk** — no known risk that could
+  invalidate this ticket's core premise *at its own level* (see below). Risks that
+  are real but belong to the next level down are recorded as **notes**, not
+  blockers.
 
 `clear` is necessary at every level. It is not, by itself, sufficient to start
 **coding** — see the ladder below.
+
+## Premise-threatening vs. downstream risk
+
+A risk holds the gate only when it could **invalidate the ticket's core premise at
+its own level** — the assumption the rest of the work is built on. A risk that is
+real but resolvable during the *next* level's work is a **downstream note**.
+
+- **Premise-threatening (blocks).** If true, the ticket is mis-scoped and anything
+  built on it would be wrong. *Example (Epic):* the MVP is framed as a "thin
+  parallel of Sales BestFit," but the service-tech availability + service-ADS data
+  layer it depends on may not exist. If it doesn't, the premise is false — this
+  blocks the epic.
+- **Downstream (note).** Real, but it lands on a child and can be pinned when that
+  child is written; it doesn't change whether *this* level is coherent. *Example
+  (Epic):* "ADS" is undefined in the ticket — fine at epic level, must be pinned
+  before the ranking *stories* are written.
+
+**Passing a level while still holding open risks is itself a mandatory judgment
+call:** state, for each remaining risk, why it is downstream and not
+premise-threatening. Never pass silently over an open risk.
 
 ## Blocking decision vs. tuning note
 
@@ -40,6 +62,12 @@ Not every open question is a blocker. Test each one before it goes in the box:
   requirement mandates configurable ranking — decomposition and implementation
   proceed with the window as a config value; the number can land post-MVP.
 
+- **Ordering / precedence between an already-enumerated set** (e.g. which lead
+  type wins a tie) is a tuning note *when the set and the resolution mechanism are
+  defined and the mechanism is required to be configurable* — only an *undefined*
+  set of options, or a precedence that changes *which code paths must exist*, is a
+  blocking decision.
+
 When you genuinely can't tell which side a question falls on, **do not silently
 decide** — surface it as a question for a human (the `review-jira-readiness`
 critic does this explicitly).
@@ -51,7 +79,7 @@ and what a PASS unlocks.
 
 | Type | Clear when… | PASS unlocks |
 |------|-------------|--------------|
-| **Epic / Feature / Initiative** | Universal gate + children identified + scope (incl. any stated MVP) coherent. | Decompose into / refine the child features. |
+| **Epic / Feature / Initiative** | Universal gate + children identified (present as linked issues; their *granularity* is judged during decomposition, not at this gate — a single coarse child doesn't block but is surfaced as a decomposition-risk note) + scope (incl. any stated MVP) coherent. | Decompose into / refine the child features. |
 | **Story** | Universal gate + **testable, in-scope acceptance criteria present** (see below). Missing, vague, or out-of-scope AC is itself a blocking item. | Start implementation. |
 | **Bug** | Universal gate + reliable repro (expected-vs-actual + sufficient steps) + known impact/severity. No reliable repro is a blocking item. | Start the fix. |
 | **Other / unknown** | Universal gate only. | Proceed per context. |
